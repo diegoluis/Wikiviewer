@@ -42,24 +42,9 @@ search.addEventListener("click", function() {
   }
   return readWiki();
 });
-//answer.innerHTML = result;
+
 temp.addEventListener("click", function() {
+  //finds.forEach()
   console.log(finds);
 });
 });
-//call the wikipedia using the search
-/*
-    $.getJSON(result, function(json) {
-      temp.addEventListener("click", function(){
-        console.log("works");
-        answer.innerHTML = json;
-      })
-      .fail(function() {
-        console.log( "error" );
-      });
-
-    });
-    */
-
-// https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json
-// https://en.wikipedia.org/w//api.php?action=opensearch&format=json&search=free%20code%20camp&limit=50&suggest=&format=json&warningsaserror=
