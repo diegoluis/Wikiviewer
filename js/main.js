@@ -42,9 +42,16 @@ search.addEventListener("click", function() {
   }
   return readWiki();
 });
-
+function readArray(arr){
+  for(var i = 0; i<arr.length; i++){
+    console.log(arr[i]);
+  }
+}
 temp.addEventListener("click", function() {
-  //finds.forEach()
+  for(var i=1; i<finds.length; i++){
+    readArray(finds[i]);
+  }
+  //finds.forEach(readArray);
   console.log(finds);
 });
 });
