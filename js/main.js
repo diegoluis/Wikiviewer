@@ -7,7 +7,7 @@ var random = document.getElementById("random");
 var text = document.getElementById("text");
 //var to store the result of the search in input
 var result;
-// store the call to the wiki
+// store the json
 var finds;
 //div to show the wiki result
 var answer = document.getElementById("answer");
@@ -19,13 +19,14 @@ var definition;
 var urlResult;
 //container for each result
 var resultContainer;
-
+//-----//
 //get a random page from wikipedia
 random.addEventListener("click", function() {
   window.open("http://en.wikipedia.org/wiki/Special:Random");
 });
+//-----//
 //at clicking the search
-search.addEventListener("click", function() {
+function doTheSearch() {
   //store the search in a variable
   result = 'https://en.wikipedia.org/w//api.php?action=opensearch&format=json&search=' + text.value + '&limit=50&suggest=&format=json&warningsaserror=';
   //console.log(result);
@@ -55,6 +56,13 @@ search.addEventListener("click", function() {
   }
   //return the function to get the stored info
   return readWiki();
+}
+//event listener for the click of the button
+search.addEventListener("click", doTheSearch);
+text.addEventListener('keypress', function(e){
+  if(13 === e.keyCode){
+    doTheSearch();
+  }
 });
 //function to read the info inside the array
 function readArray(arr){
