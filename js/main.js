@@ -11,47 +11,76 @@ var result;
 var finds;
 //div to show the wiki result
 var answer = document.getElementById("answer");
-//
-var temp = document.getElementById("temporal");
+//title of result
+var title;
+//definition
+var definition;
+//url
+var urlResult;
+//container for each result
+var resultContainer;
+
 //get a random page from wikipedia
 random.addEventListener("click", function() {
   window.open("http://en.wikipedia.org/wiki/Special:Random");
 });
-//store the search
+//at clicking the search
 search.addEventListener("click", function() {
+  //store the search in a variable
   result = 'https://en.wikipedia.org/w//api.php?action=opensearch&format=json&search=' + text.value + '&limit=50&suggest=&format=json&warningsaserror=';
   //console.log(result);
-  //return result;
+  //send the variable to the api and get an array with the result
   function readWiki(){
     $.ajax({
+      //the search of the user
         url: result,
         type: 'GET',
+        //a custom header for wikipedia
         headers: {
           'Api-User-Agent' : 'diego@diegoluis.net'
         },
+        //type of the data
         dataType: 'jsonp',
       })
       .fail(function() {
         console.log("error");
       })
+      //when the data arrives store it in a variable and return
       .done(function(data){
         //console.log(data);
         finds = data;
-        return finds;
+        //return finds;
+        readArray(finds);
       });
   }
+  //return the function to get the stored info
   return readWiki();
 });
+//function to read the info inside the array
 function readArray(arr){
-  for(var i = 0; i<arr.length; i++){
-    console.log(arr[i]);
-  }
+    //read the interior arrays
+    for(var j=0; j<arr[1].length; j++){
+      //the container
+      resultContainer = document.createElement("div");
+      resultContainer.className = "result";
+      //the title
+      title = document.createElement("h2");
+      var titleText = document.createTextNode(arr[1][j]);
+      title.appendChild(titleText);
+      resultContainer.appendChild(title);
+      //the description
+      definition = document.createElement("p");
+      var defText = document.createTextNode(arr[2][j]);
+      definition.appendChild(defText);
+      resultContainer.appendChild(definition);
+      //the url
+      urlResult = document.createElement("a");
+      urlResult.href = arr[3][j];
+      urlResult.target ="_blank";
+      urlResult.appendChild(resultContainer);
+      answer.appendChild(urlResult);
+      //console.log(arr[3][j]);
+    }
+
 }
-temp.addEventListener("click", function() {
-  for(var i=1; i<finds.length; i++){
-    readArray(finds[i]);
-  }
-  //finds.forEach(readArray);
-  console.log(finds);
-});
 });
