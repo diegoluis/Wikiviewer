@@ -27,9 +27,10 @@ random.addEventListener("click", function() {
 //-----//
 //at clicking the search
 function doTheSearch() {
+  //calls the function to clear the page
+  clearAnswer();
   //store the search in a variable
   result = 'https://en.wikipedia.org/w//api.php?action=opensearch&format=json&search=' + text.value + '&limit=50&suggest=&format=json&warningsaserror=';
-  //console.log(result);
   //send the variable to the api and get an array with the result
   function readWiki(){
     $.ajax({
@@ -48,10 +49,16 @@ function doTheSearch() {
       })
       //when the data arrives store it in a variable and return
       .done(function(data){
-        //console.log(data);
-        finds = data;
-        //return finds;
-        readArray(finds);
+        //if no results found
+        if(data[1].length<=0){
+          noResults();
+        }else{
+          //store the json in a variable
+          finds = data;
+          //process the json
+          readArray(finds);
+        }
+
       });
   }
   //return the function to get the stored info
@@ -59,6 +66,7 @@ function doTheSearch() {
 }
 //event listener for the click of the button
 search.addEventListener("click", doTheSearch);
+//event listener for the enter key
 text.addEventListener('keypress', function(e){
   if(13 === e.keyCode){
     doTheSearch();
@@ -66,6 +74,7 @@ text.addEventListener('keypress', function(e){
 });
 //function to read the info inside the array
 function readArray(arr){
+    answer.classList.toggle("transparent");
     //read the interior arrays
     for(var j=0; j<arr[1].length; j++){
       //the container
@@ -89,6 +98,15 @@ function readArray(arr){
       answer.appendChild(urlResult);
       //console.log(arr[3][j]);
     }
-
+}
+function clearAnswer(){
+    answer.innerHTML = "";
+}
+//show an error message in case there is no results in the search
+function noResults(){
+  var noRes = document.createElement("h2");
+  var noResText = document.createTextNode("Sorry, no results found.");
+  noRes.appendChild(noResText);
+  answer.appendChild(noRes);
 }
 });

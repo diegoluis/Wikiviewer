@@ -7,18 +7,36 @@
 @import "partials/variables";
 @import "partials/normalize";
 
-/*! I am loud; hear me roar */
-#main {
-	color: #999;
-	background-image: image-url('image.jpg');
-	.content {
-		color: $color10;
-	}
-}
 
 // ======================================
-// Here is a main section devide
+// header
 // ======================================
+h1{
+	font-size: 4rem;
+	margin-bottom: 0;
+}
+header{
+	//@include borderB;
+	margin-bottom: 5rem;
+	padding-bottom: 1rem;
+}
+// ======================================
+// answers
+// ======================================
+.answers{
+	margin: 2%;
+	a{
+		color: #000;
+		h2{
+			color: $blue;
+		}
+	}
+}
+.result{
+	@include borderB;
+	margin-bottom: 1rem;
+	padding: 1rem;
+}
 
 // Here is a sub section divide
 // ======================================
